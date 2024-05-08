@@ -1,9 +1,24 @@
-const express =require('express');
+const express = require('express');
+const path = require('path');
 
-const app=express();
+const app = express();
 
-app.use(express.static('public'));
+const port = 3000;
 
-app.listen(4000,()=>{
-    console.log("server is started...")
+app.use(express.static(path.join(__dirname, "public")))
+
+app.get('/', (req, res)=>{
+    res.sendFile(path.join(__dirname, 'public/home.html'))
+})
+
+app.get('/aboutus', (req, res)=>{
+    res.sendFile(path.join(__dirname, 'public/aboutus.html'))
+})
+
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, 'public/notfound.html'))
+})
+
+app.listen(port, ()=>{
+    console.log('started...')
 })
